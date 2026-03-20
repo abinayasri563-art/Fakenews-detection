@@ -1,0 +1,80 @@
+import pandas as pd
+import re
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, roc_auc_score
+
+from lime.lime_text import LimeTextExplainer
+
+data = pd.read_csv("news.csv")
+
+data['label'] = data['label'].map({'REAL': 1, 'FAKE': 0})
+
+
+stop_words = {
+    'the','is','and','in','to','of','a','for','on','with','as','by','an','at','from',
+    'this','that','it','be','are','was','were','has','have','had'
+}
+
+def clean_text(text):
+    text = str(text).lower()
+    text = re.sub(r'[^a-zA-Z]', ' ', text)
+    words = text.split()
+    words = [w for w in words if w not in stop_words]
+    return " ".join(words)
+
+data['clean_text'] = data['text'].apply(clean_text)
+
+tfidf = TfidfVectorizer(max_features=5000)
+
+X = tfidf.fit_transform(data['clean_text'])
+y = data['label']
+
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
+
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)[:, 1]
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("ROC-AUC:", roc_auc_score(y_test, y_prob))
+
+
+def predict_proba_text(texts):
+    texts_cleaned = [clean_text(t) for t in texts]
+    vectors = tfidf.transform(texts_cleaned)
+    return model.predict_proba(vectors)
+
+
+explainer = LimeTextExplainer(class_names=['Fake', 'Real'])
+
+exp = explainer.explain_instance(
+    data['text'][0],         
+    predict_proba_text,      
+    num_features=5
+)
+
+print("\nTop words influencing prediction:")
+for word, weight in exp.as_list():
+    print(word, ":", weight)
+
+
+def predict_news(text):
+    cleaned = clean_text(text)
+    vector = tfidf.transform([cleaned])
+    prediction = model.predict(vector)
+    
+    return "REAL" if prediction[0] == 1 else "FAKE"
+
+
+print("\nCustom Test:")
+print(predict_news("Breaking news: miracle cure discovered"))
