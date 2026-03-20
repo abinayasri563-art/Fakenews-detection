@@ -1,5 +1,4 @@
-# Fake News Detection
-# 📰 Fake News Detection using Machine Learning
+# 📰 Fake News Detection 
 
 ## 📌 Description
 
