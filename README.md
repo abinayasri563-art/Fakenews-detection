@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # 📰 Fake News Detection 
+=======
+# 📰 Fake News Detection using Machine Learning
+>>>>>>> cfb33d7 (Fix project for deployment)
 
 ## 📌 Description
 
@@ -19,6 +23,7 @@ This project detects whether a news article is **FAKE** or **REAL** using Machin
 ## 📂 Project Structure
 
 fake-news-detection/
+<<<<<<< HEAD
 
 │
 
@@ -28,6 +33,12 @@ fake-news-detection/
 
 ├── requirements.txt
 
+=======
+│
+├── fake_news_detection.py
+├── news.csv
+├── requirements.txt
+>>>>>>> cfb33d7 (Fix project for deployment)
 └── README.md
 
 ---
