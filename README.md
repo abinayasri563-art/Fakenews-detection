@@ -1,6 +1,6 @@
 
 # 📰 Fake News Detection using Machine Learning
->>>>>>> cfb33d7 (Fix project for deployment)
+ (Fix project for deployment)
 
 ## 📌 Description
 
