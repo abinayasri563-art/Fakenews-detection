@@ -81,7 +81,3 @@ Breaking news: miracle cure discovered
 FAKE
 
 ---
-
-## 👩‍💻 Author
-
-Abinaya
