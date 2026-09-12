@@ -20,22 +20,12 @@ This project detects whether a news article is **FAKE** or **REAL** using Machin
 ## 📂 Project Structure
 
 fake-news-detection/
-<<<<<<< HEAD
-
-│
-
-├── fake_news_detection.py
-
-├── news.csv
-
-├── requirements.txt
-
-=======
-│
 ├── fake_news_detection.py
 ├── news.csv
 ├── requirements.txt
->>>>>>> cfb33d7 (Fix project for deployment)
+├── fake_news_detection.py
+├── news.csv
+├── requirements.txt
 └── README.md
 
 ---
